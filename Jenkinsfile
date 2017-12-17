@@ -1,5 +1,5 @@
 //node("${env.SLAVE}") {
-node("${env.MASTER}") {
+node {
   stage("Build"){
 
     sh "echo build artefact"
