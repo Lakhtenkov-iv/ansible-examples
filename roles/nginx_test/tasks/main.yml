@@ -1,0 +1,10 @@
+- name: "Check nginx"
+  uri:
+    url: http://localhost/
+    return_content: yes
+  register: tomcat_page
+  failed_when: "'Apache Tomcat' not in tomcat_page.content"
+
+- name: "Show debug message"
+  debug:
+    msg: "Tomcat page is available through nginx"

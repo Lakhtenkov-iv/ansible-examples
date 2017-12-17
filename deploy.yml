@@ -1,0 +1,4 @@
+- name: "Deploy application"
+  hosts: localhost
+  roles:
+    - { role: deploy, context: /myapp, war: "{{artifact}}", username: "tomcat_as", password: "tomcat_as" }

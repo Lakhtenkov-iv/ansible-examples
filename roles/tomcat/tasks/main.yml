@@ -1,0 +1,93 @@
+- name: Create user group for tomcat app user
+  group:
+    name: "{{tomcat_group}}"
+    state: present
+  become: true
+  become_method: sudo
+
+- name: "Create user for tomcat application"
+  user:
+    name: "{{tomcat_user}}"
+    comment: "User for tomcat application"
+    group: "{{tomcat_group}}"
+  become: true
+  become_method: sudo
+
+- name: "Craete folders for tomcat"
+  file:
+    path: "{{catalina_home}}"
+    state: directory
+    recurse: yes
+    owner: "{{tomcat_user}}"
+    group: "{{tomcat_group}}"
+  become: true
+  become_method: sudo
+
+- name: "Download and unarchive Tomcat"
+  unarchive:
+#    src: "http://archive.apache.org/dist/tomcat/tomcat-{{tomcat_version.split('.')[0]}}/v{{tomcat_version}}/bin/apache-tomcat-{{tomcat_version}}.tar.gz"
+    src: "{{tomcat_links[tomcat_version]}}"
+    dest: /opt/tomcat/{{tomcat_version}}
+    creates: "{{catalina_home}}/bin/startup.sh"
+    remote_src: yes
+    extra_opts: --strip-components=1
+  become: true
+  become_user: "{{tomcat_user}}"
+
+- name: "Redirect tomcat logs"
+  file:
+    src: "{{catalina_home}}/logs"
+    dest: /var/log/tomcat
+    state: link
+  become: true
+  become_method: sudo
+
+- name: "Change tomcat HTTP port"
+  replace:
+    path: "{{catalina_home}}/conf/server.xml"
+    regexp: '<Connector port="\d{1,5}" protocol="HTTP/1.1"'
+    replace: '<Connector port="{{tomcat_port}}" protocol="HTTP/1.1"'
+  become: true
+  become_user: "{{tomcat_user}}"
+  notify: 
+    - restart tomcat
+
+- name: "Create tomcat manager console user"
+  template: 
+    src: tomcat-users.j2
+    dest: "{{catalina_home}}/conf/tomcat-users.xml"
+  become: true
+  become_user: "{{tomcat_user}}"
+  notify: 
+    - restart tomcat
+
+- name: "Make tomcat manager interface available"
+  copy: 
+    src: context.j2
+    dest: "{{catalina_home}}/webapps/manager/META-INF/context.xml"
+  become: true
+  become_user: "{{tomcat_user}}"
+  notify: 
+    - restart tomcat
+
+- name: "Create tomcat systemd service"
+  template: 
+    src: tomcat.service.j2
+    dest: /etc/systemd/system/tomcat.service
+  become: true
+  become_method: sudo
+
+- name: "Enable and start tomcat service"  
+  service:
+    name: tomcat
+    state: started
+    enabled: yes
+  become: true
+  become_method: sudo
+
+- name: "Force handlers"
+  meta: flush_handlers
+
+- name: "Wait for tomcat to start"
+  wait_for: 
+    port: "{{tomcat_port}}"

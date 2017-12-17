@@ -1,0 +1,14 @@
+- name: "VM provision"
+  hosts: vagrantvms
+  vars:
+    java_ver: 1.8.0
+    tomcat_ver: 8.5
+    app_port: 8080
+  roles:
+    - { role: java, java_version: "{{java_ver}}" }
+    - { role: tomcat, tomcat_version: "{{tomcat_ver}}", tomcat_port: "{{app_port}}" }
+    - { role: nginx, tomcat_port: "{{app_port}}" }
+    - { role: java_test, java_version: "{{java_ver}}" }
+    - { role: tomcat_test, tomcat_port: "{{app_port}}" }
+    - { role: nginx_test }
+

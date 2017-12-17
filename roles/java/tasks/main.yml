@@ -1,0 +1,6 @@
+- name: "Installing java"
+  yum: 
+    name: java-{{java_version}}-openjdk.x86_64
+    state: present
+  become: true
+  become_method: sudo

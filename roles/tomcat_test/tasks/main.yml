@@ -1,0 +1,26 @@
+- name: "Check if tomcat is running 1"
+  shell: "curl -s -IL localhost:{{tomcat_port}} | grep 'HTTP/1.1 200'"
+  register: tomcat_status1
+  failed_when: tomcat_status1.stdout != "HTTP/1.1 200 "
+  changed_when: false
+
+- name: "Check if tomcat is running 2"
+  shell: 'ps -eo etime,args | grep tomcat | grep -v grep | tr -s " " | cut -d " " -f 2'
+  register: tomcat_status2
+  failed_when: tomcat_status2.stdout == ""
+  changed_when: false
+
+- name: "Check if tomcat is running 3"
+  shell: 'systemctl status tomcat | grep "active (running)"'
+  register: tomcat_status3
+  failed_when: tomcat_status3.stdout == ""
+  changed_when: false
+  
+- debug:
+    msg: "Tomcat HTTP response code {{ tomcat_status1.stdout }}"
+ 
+- debug: 
+    msg: "Tomcat is up for  {{ tomcat_status2.stdout }}"
+
+- debug:
+    msg: "Tomcat service status  {{ tomcat_status3.stdout }}"

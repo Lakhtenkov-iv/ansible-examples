@@ -1,0 +1,3 @@
+[hosts]
+loaclhost ansible_connection=local
+

@@ -1,0 +1,8 @@
+- name: "VM destroy"
+  hosts: localhost
+  tasks:
+    - name: "Set VM state"
+      vagrant:
+        path: ./
+        state: destroyed
+      register: result

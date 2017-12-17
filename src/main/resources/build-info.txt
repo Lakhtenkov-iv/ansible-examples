@@ -1,0 +1,6 @@
+Build time: Fri Dec 15 11:00:00 +03 2017
+Build Machine: EPBYMINW2033
+Build User Igor Lakhtenkov
+GIT URL: https://Igor_Lakhtenkov@git.epam.com/siarhei_beliakou/mntlab-exam.git
+GIT Commit: test
+GIT Branch: ilakhtenkov

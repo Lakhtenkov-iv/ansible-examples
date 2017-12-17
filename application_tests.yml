@@ -1,0 +1,4 @@
+- name: "VM provision"
+  hosts: vagrantvms
+  roles:
+    - { role: app_test, server: localhost, content: "2033", context: /myapp}

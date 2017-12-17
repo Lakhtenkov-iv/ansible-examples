@@ -1,0 +1,9 @@
+- name: "Test java"
+  shell: "java -version 2>&1 | grep -Po '(?<=version \")[^_]*'"
+  register: java_test
+  failed_when: java_test.stdout != java_version
+  changed_when: false
+
+- name: "Show java version"
+  debug:
+    msg: "Installed java version  {{ java_test.stdout }}"

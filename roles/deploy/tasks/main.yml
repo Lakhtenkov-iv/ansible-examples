@@ -1,0 +1,6 @@
+- name: Deploy application
+  deploy:
+    context: "{{context}}"
+    war: "{{war}}"
+    username: "{{username}}"
+    password: "{{password}}"

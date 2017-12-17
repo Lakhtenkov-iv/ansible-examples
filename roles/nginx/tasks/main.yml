@@ -1,0 +1,32 @@
+- name: "Nginx install"
+  yum: 
+    name: nginx
+    state: present
+  become: true
+  become_user: root
+
+- name: "Coping nginx base config"
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+  become: true
+  become_method: sudo
+  notify: 
+    - reload nginx
+
+- name: "Create nginx vhosts config file"
+  template: 
+    src: vhosts.j2
+    dest: /etc/nginx/conf.d/vhosts.conf
+  become: true
+  become_method: sudo
+  notify: 
+    - reload nginx
+
+- name: "Enable and start nginx service"  
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+  become: true
+  become_method: sudo 

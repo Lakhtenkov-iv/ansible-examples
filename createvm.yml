@@ -1,0 +1,14 @@
+- name: "VM creation"
+  hosts: localhost
+  tasks:
+    - name: "Set VM state"
+      vagrant:
+        path: ./
+        state: started
+      register: result
+
+#    - name: "Refresh inventory"
+#      template:
+#        dest: ./inventory
+#        src: template-inventory.j2
+#      when: result.state == 'running'
