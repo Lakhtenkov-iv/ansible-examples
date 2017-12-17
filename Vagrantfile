@@ -9,7 +9,7 @@ Vagrant.configure("2") do |config|
     config.vm.box = "sbeliakou/centos-7.3-x86_64-minimal"
     config.vm.network "forwarded_port", guest: 8080, host: "808#{i-1}"
 
-    config.vm.hostname = "pet#{i}
+    config.vm.hostname = "pet-#{i}"
   
     config.vm.provider "virtualbox" do |vb|
       vb = config.vm.hostname
