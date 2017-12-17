@@ -1,5 +1,5 @@
 //node("${env.SLAVE}") {
-node {
+node("EPBYMINW2033") {
   stage("Build"){
 
     sh "echo build artefact"
