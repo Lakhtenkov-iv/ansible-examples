@@ -30,12 +30,14 @@ node("EPBYMINW2033") {
   }
 
   stage("Provision VM"){
-      withCredentials([usernamePassword(credentialsId: '0175b9ec-098a-46da-a873-16389d890347', variable: 'vaultpass')]) {            
-          sh '''
+      withCredentials([[$class: 'StringBinding', credentialsId: '0175b9ec-098a-46da-a873-16389d890347', variable: 'vaultpass']]) {            
+          /*sh '''
           vaultpasswordfile=".vault_pass.txt"
           echo $vaultpass >> $vaultpasswordfile
           ansible-playbook provisionvm.yml -i inventory.py --vault-password-file $vaultpasswordfile
           '''
+           */
+          sh "echo $vaultpass | ansible-playbook provisionvm.yml -i inventory.py --vault-password-file=/bin/cat"  
       }
     
 
