@@ -1,5 +1,4 @@
-- name: Include vars of tomcat manager credentials.
-  include_vars:
+- include_vars:
     file: tomcat_manager_credentials.yml
 
 - name: Deploy application
