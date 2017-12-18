@@ -1,6 +1,8 @@
 - include_vars:
     file: tomcat_manager_credentials.yml
 
+- include_tasks: createvm.yml
+
 - name: Create user group for tomcat app user
   group:
     name: "{{tomcat_group}}"
