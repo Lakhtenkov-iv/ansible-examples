@@ -9,7 +9,7 @@
 
     - name: "Adding new host"
       add_host:
-        name: app_server
+        name: vagrantvms
         ansible_connection: ssh
         ansible_ssh_host: "{{result.ip_address}}"
         ansible_ssh_port: "{{result.port}}"
