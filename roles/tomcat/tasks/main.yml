@@ -1,3 +1,6 @@
+- include_vars:
+    file: tomcat_manager_credentials.yml
+
 - name: Create user group for tomcat app user
   group:
     name: "{{tomcat_group}}"
@@ -25,8 +28,8 @@
 
 - name: "Download and unarchive Tomcat"
   unarchive:
-    src: "http://archive.apache.org/dist/tomcat/tomcat-{{tomcat_version.split('.')[0]}}/v{{tomcat_version}}/bin/apache-tomcat-{{tomcat_version}}.tar.gz"
-#    src: "{{tomcat_links[tomcat_version]}}"
+#    src: "http://archive.apache.org/dist/tomcat/tomcat-{{tomcat_version.split('.')[0]}}/v{{tomcat_version}}/bin/apache-tomcat-{{tomcat_version}}.tar.gz"
+    src: "{{tomcat_links[tomcat_version]}}"
     dest: /opt/tomcat/{{tomcat_version}}
     creates: "{{catalina_home}}/bin/startup.sh"
     remote_src: yes
@@ -51,6 +54,9 @@
   become_user: "{{tomcat_user}}"
   notify: 
     - restart tomcat
+
+- debug:
+    msg: "{{tomcat_manager_user}}:{{tomcat_manager_password}}"
 
 - name: "Create tomcat manager console user"
   template: 

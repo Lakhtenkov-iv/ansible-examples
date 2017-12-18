@@ -30,8 +30,11 @@ node("EPBYMINW2033") {
   }
 
   stage("Provision VM"){
-
-    sh "ansible-playbook provisionvm.yml -i inventory.py"
+      environment {
+          ANSIBLE_VAULT_KEY = credentials('ansible_vault')
+      }
+      sh "ansible-playbook provisionvm.yml -i inventory.py --vault-password-file ${env.ANSIBLE_VAULT_KEY}"
+    
 
   }
 

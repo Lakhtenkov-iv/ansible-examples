@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-vm_count = 2
+vm_count = 1
 
 Vagrant.configure("2") do |config|
 
