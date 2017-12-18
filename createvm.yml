@@ -8,12 +8,12 @@
       register: result
 
     - name: "Adding new host"
-    add_host:
-      name: app_server
-      ansible_connection: ssh
-      ansible_ssh_host: "{{result.ip_address}}"
-      ansible_ssh_port: "{{result.port}}"
-      ansible_user: "{{result.user}}"
-      ansible_ssh_private_key_file: "{{result.ssh_key_file_path}}"
-    when: result.state == 'running'
+      add_host:
+        name: app_server
+        ansible_connection: ssh
+        ansible_ssh_host: "{{result.ip_address}}"
+        ansible_ssh_port: "{{result.port}}"
+        ansible_user: "{{result.user}}"
+        ansible_ssh_private_key_file: "{{result.ssh_key_file_path}}"
+      when: result.state == 'running'
 
