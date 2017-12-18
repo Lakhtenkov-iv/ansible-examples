@@ -55,9 +55,6 @@
   notify: 
     - restart tomcat
 
-- debug:
-    msg: "{{tomcat_manager_user}}:{{tomcat_manager_password}}"
-
 - name: "Create tomcat manager console user"
   template: 
     src: tomcat-users.j2
