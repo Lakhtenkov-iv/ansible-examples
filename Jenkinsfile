@@ -30,23 +30,15 @@ node("EPBYMINW2033") {
   }
 
   stage("Provision VM"){
-      withCredentials([[$class: 'StringBinding', credentialsId: '0175b9ec-098a-46da-a873-16389d890347', variable: 'vaultpass']]) {            
-          /*sh '''
-          vaultpasswordfile=".vault_pass.txt"
-          echo $vaultpass >> $vaultpasswordfile
-          ansible-playbook provisionvm.yml -i inventory.py --vault-password-file $vaultpasswordfile
-          '''
-           */
+      withCredentials([[$class: 'StringBinding', credentialsId: 'ansible_vault', variable: 'vaultpass']]) {            
           sh "echo $vaultpass | ansible-playbook provisionvm.yml -i inventory.py --vault-password-file=/bin/cat"  
       }
-    
-
   }
 
   stage("Deploy Artefact"){
-
-    sh "ansible-playbook deploy.yml -e artifact=mnt-exam.tar.gz -i inventory.py"
-
+      withCredentials([[$class: 'StringBinding', credentialsId: 'ansible_vault', variable: 'vaultpass']]) {            
+          sh "echo $vaultpass | ansible-playbook deploy.yml -e artifact=mnt-exam.tar.gz -i inventory.py --vault-password-file=/bin/cat"  
+      }
   }
 
   stage("Test Artefact is deployed successfully"){
