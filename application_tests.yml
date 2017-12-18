@@ -1,4 +1,4 @@
-- include: createvm.yml
+- import_playbook: createvm.yml
 
 - name: "VM provision"
   hosts: vagrantvms
