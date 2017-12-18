@@ -27,7 +27,7 @@ result = {
     'all': {
         "children": ['local', 'vagrantvms'],
     },
-    'localhost': {
+    'local': {
         "hosts": [
             "localhost"
             ],
