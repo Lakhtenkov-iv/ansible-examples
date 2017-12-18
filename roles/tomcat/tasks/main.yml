@@ -25,8 +25,8 @@
 
 - name: "Download and unarchive Tomcat"
   unarchive:
-#    src: "http://archive.apache.org/dist/tomcat/tomcat-{{tomcat_version.split('.')[0]}}/v{{tomcat_version}}/bin/apache-tomcat-{{tomcat_version}}.tar.gz"
-    src: "{{tomcat_links[tomcat_version]}}"
+    src: "http://archive.apache.org/dist/tomcat/tomcat-{{tomcat_version.split('.')[0]}}/v{{tomcat_version}}/bin/apache-tomcat-{{tomcat_version}}.tar.gz"
+#    src: "{{tomcat_links[tomcat_version]}}"
     dest: /opt/tomcat/{{tomcat_version}}
     creates: "{{catalina_home}}/bin/startup.sh"
     remote_src: yes

@@ -1,6 +1,10 @@
+- name: Include vars of tomcat manager credentials.
+  include_vars:
+    file: tomcat_manager_credentials.yml
+
 - name: Deploy application
   deploy:
     context: "{{context}}"
     war: "{{war}}"
-    username: "{{username}}"
-    password: "{{password}}"
+    username: "{{tomcat_manager_user}}"
+    password: "{{tomcat_manager_password}}"
