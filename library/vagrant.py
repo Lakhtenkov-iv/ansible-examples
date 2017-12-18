@@ -10,7 +10,8 @@ def run_module():
 
     module_args = dict(
         path=dict(type='str', required=True),
-        state=dict(type='str', required=True)
+        state=dict(type='str', required=True),
+        #count=dict(type='int', required=False, default=0)
     )
 
     result = dict(
@@ -33,7 +34,12 @@ def run_module():
         vm.status()
     except:
         module.fail_json(msg='Vagrantfile syntax error', **result)
+    '''
+    os_env = os.environ.copy()
+    os_env['vm_count'] = '1'
 
+    vm.env = os_env
+    '''
     if module.params['state'] not in ['started', 'stopped', 'destroyed']:
         module.fail_json(msg='Illegal state, please use started|stopped|destroyed', **result)
 
