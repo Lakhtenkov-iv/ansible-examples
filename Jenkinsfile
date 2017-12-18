@@ -30,7 +30,7 @@ node("EPBYMINW2033") {
   }
 
   stage("Provision VM"){
-      withCredentials([usernamePassword(credentialsId: 'ansible', variable: 'vaultpass')]) {            
+      withCredentials([usernamePassword(credentialsId: '0175b9ec-098a-46da-a873-16389d890347', variable: 'vaultpass')]) {            
           sh '''
           vaultpasswordfile=".vault_pass.txt"
           echo $vaultpass >> $vaultpasswordfile
