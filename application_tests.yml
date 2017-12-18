@@ -1,4 +1,6 @@
-- include_tasks: createvm.yml
+- name: "Add host"
+  hosts: localhost 
+  include_tasks: createvm.yml
 
 - name: "VM provision"
   hosts: vagrantvms
