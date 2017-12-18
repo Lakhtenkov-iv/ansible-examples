@@ -3,7 +3,6 @@
 import json
 import os
 import vagrant
-from pprint import pprint
 
 vm = vagrant.Vagrant("./")
 
@@ -15,10 +14,10 @@ def get_vm_info(name):
     d.update({"ansible_ssh_host": vm.hostname(name)})
     d.update({"ansible_user": vm.user(name)})
     d.update({"ansible_ssh_private_key_file": vm.keyfile(name)})
-
     return d
 
 hosts = []
+
 for i in vm.status():
     if i[1] == 'running':
         hosts.append(i[0])
